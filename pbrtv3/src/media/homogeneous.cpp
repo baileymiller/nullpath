@@ -33,7 +33,6 @@
 
 // media/homogeneous.cpp*
 #include "media/homogeneous.h"
-#include "transmittance/transmittance_exponential.h"
 #include "sampler.h"
 #include "interaction.h"
 #include "paramset.h"
@@ -80,17 +79,17 @@ HomogeneousMedium::HomogeneousMedium(const Spectrum &sigma_a,
     }
   }
 
-Spectrum HomogeneousMedium::Tr(const RayDifferential &ray, Sampler &sampler, uint32_t flags, TransportMode mode) const {
+Spectrum HomogeneousMedium::Tr(const RayDifferential &ray, Sampler &sampler) const {
     ProfilePhase _(Prof::MediumTr);
     return Exp(-sigma_t * std::min(ray.tMax * ray.d.Length(), MaxFloat));
 }
 
-Spectrum HomogeneousMedium::Tr(const Ray& ray, Sampler& sampler, uint32_t flags, TransportMode mode) const
+Spectrum HomogeneousMedium::Tr(const Ray& ray, Sampler& sampler) const
 {
-    return Tr(RayDifferential(ray), sampler, flags, mode);
+    return Tr(RayDifferential(ray), sampler);
 }
 
-Spectrum HomogeneousMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, uint32_t flags, TransportMode mode) const {
+Spectrum HomogeneousMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const {
     ProfilePhase _(Prof::MediumSample);
     int channel = std::min((int)(sampler.Get1D() * Spectrum::nSamples),
             Spectrum::nSamples - 1);
@@ -116,7 +115,7 @@ Spectrum HomogeneousMedium::Sample(const RayDifferential &ray, Sampler &sampler,
     return sampledMedium ? (Tr * sigma_s / pdf) : (Tr / pdf);
 }
 
-Spectrum HomogeneousMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel, uint32_t flags, TransportMode mode) const 
+Spectrum HomogeneousMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel) const 
 {
     ProfilePhase _(Prof::MediumSample);
 		Ray normRay = Ray(ray.o, Normalize(ray.d), ray.d.Length() * ray.tMax);
@@ -130,9 +129,9 @@ Spectrum HomogeneousMedium::SampleChannel(const Ray &ray, Sampler &sampler, Memo
     return Exp(-GetMajorant() * t);
 }
 
-Spectrum HomogeneousMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi, uint32_t flags, TransportMode mode) const
+Spectrum HomogeneousMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi) const
 {
-	return Sample(RayDifferential(ray), sampler, arena, mi, flags, mode);
+	return Sample(RayDifferential(ray), sampler, arena, mi);
 }
 
 Spectrum HomogeneousMedium::GetAbsorption(const Point3f &p) const {

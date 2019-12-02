@@ -33,7 +33,6 @@
 
 // media/infinite.cpp*
 #include "media/infinite.h"
-#include "transmittance/transmittance_exponential.h"
 #include "sampler.h"
 #include "interaction.h"
 #include "paramset.h"
@@ -52,17 +51,17 @@ InfiniteMedium::InfiniteMedium(const Spectrum &sigma_a,
 		sigma_t(sigma_a + sigma_s + sigma_n), 
 		g(g) { }
 
-Spectrum InfiniteMedium::Tr(const RayDifferential &ray, Sampler &sampler, uint32_t flags, TransportMode mode) const {
+Spectrum InfiniteMedium::Tr(const RayDifferential &ray, Sampler &sampler) const {
     ProfilePhase _(Prof::MediumTr);
     return Exp(-sigma_t * std::min(ray.tMax * ray.d.Length(), MaxFloat));
 }
 
-Spectrum InfiniteMedium::Tr(const Ray& ray, Sampler& sampler, uint32_t flags, TransportMode mode) const
+Spectrum InfiniteMedium::Tr(const Ray& ray, Sampler& sampler) const
 {
-    return Tr(RayDifferential(ray), sampler, flags, mode);
+    return Tr(RayDifferential(ray), sampler);
 }
 
-Spectrum InfiniteMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, uint32_t flags, TransportMode mode) const {
+Spectrum InfiniteMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const {
     ProfilePhase _(Prof::MediumSample);
     int channel = std::min((int)(sampler.Get1D() * Spectrum::nSamples),
             Spectrum::nSamples - 1);
@@ -86,7 +85,7 @@ Spectrum InfiniteMedium::Sample(const RayDifferential &ray, Sampler &sampler, Me
     return (Tr * sigma_s / pdf);
 }
 
-Spectrum InfiniteMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel, uint32_t flags, TransportMode mode) const 
+Spectrum InfiniteMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel) const 
 {
     ProfilePhase _(Prof::MediumSample);
     Float dist = -std::log(1 - sampler.Get1D()) / GetMajorant()[channel];
@@ -96,9 +95,9 @@ Spectrum InfiniteMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryA
     return Exp(-GetMajorant() * t * ray.d.Length());
 }
 
-Spectrum InfiniteMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi, uint32_t flags, TransportMode mode) const
+Spectrum InfiniteMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi) const
 {
-	return Sample(RayDifferential(ray), sampler, arena, mi, flags, mode);
+	return Sample(RayDifferential(ray), sampler, arena, mi);
 }
 
 Spectrum InfiniteMedium::GetAbsorption(const Point3f &p) const {

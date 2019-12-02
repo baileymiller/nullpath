@@ -183,15 +183,13 @@ namespace pbrt
   Point3i OpenvdbGridMedium::getDims() const { return m_n; }
 
   Spectrum OpenvdbGridMedium::Sample(const Ray &ray, Sampler &sampler,   
-         MemoryArena &arena, MediumInteraction *mi, 
-         uint32_t flags, TransportMode mode) const {
+         MemoryArena &arena, MediumInteraction *mi) const {
     std::cout << "Sample not implemented for openvdb grid." << std::endl;
     return Spectrum(0.0f);
   }
   
   Spectrum OpenvdbGridMedium::SampleChannel(const Ray &rWorld, Sampler &sampler, 
-         MemoryArena &arena, MediumInteraction *mi, int channel,
-         uint32_t flags, TransportMode mode) const {
+         MemoryArena &arena, MediumInteraction *mi, int channel) const {
     ProfilePhase _(Prof::MediumSample);
     Ray normRay = Ray(rWorld.o, Normalize(rWorld.d), rWorld.d.Length() * rWorld.tMax);
     Ray ray = m_worldToMedium(normRay);
@@ -207,8 +205,7 @@ namespace pbrt
     return Exp(-GetMajorant() * (t-tMin));
   }
 
-  Spectrum OpenvdbGridMedium::Tr(const Ray& ray, Sampler& sampler, 
-                                 uint32_t flags, TransportMode mode) const {
+  Spectrum OpenvdbGridMedium::Tr(const Ray& ray, Sampler& sampler) const {
     std::cerr << "Tr not implemented for openvb grid" << std::endl;
     return Spectrum(0.0f);
   }  
