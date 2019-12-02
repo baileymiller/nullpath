@@ -33,7 +33,6 @@
 
 // media/homogeneous.cpp*
 #include "media/homogeneous.h"
-#include "transmittance/transmittance_exponential.h"
 #include "sampler.h"
 #include "interaction.h"
 #include "paramset.h"

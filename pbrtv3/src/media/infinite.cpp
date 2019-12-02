@@ -33,7 +33,6 @@
 
 // media/infinite.cpp*
 #include "media/infinite.h"
-#include "transmittance/transmittance_exponential.h"
 #include "sampler.h"
 #include "interaction.h"
 #include "paramset.h"
