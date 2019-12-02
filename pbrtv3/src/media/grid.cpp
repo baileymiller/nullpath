@@ -45,7 +45,7 @@ namespace pbrt {
 
       Spectrum GridDensityMedium::SampleChannel(const Ray &rWorld, 
         Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, 
-        int channel, uint32_t flags, TransportMode mode) const {
+        int channel) const {
         ProfilePhase _(Prof::MediumSample);
         Ray normRay = Ray(rWorld.o, Normalize(rWorld.d), rWorld.d.Length() * rWorld.tMax);
         Ray ray = WorldToMedium(normRay);
@@ -120,7 +120,7 @@ namespace pbrt {
 
 	Spectrum GridDensityMedium::Sample(const Ray &rWorld, Sampler &sampler,
 		MemoryArena &arena,
-		MediumInteraction *mi, uint32_t flags, TransportMode mode) const {
+		MediumInteraction *mi) const {
 		ProfilePhase _(Prof::MediumSample);
 		Ray ray = WorldToMedium(
 			Ray(rWorld.o, Normalize(rWorld.d), rWorld.tMax * rWorld.d.Length()));
@@ -145,7 +145,7 @@ namespace pbrt {
 		return Spectrum(1.f);
 	}
 
-	Spectrum GridDensityMedium::Tr(const Ray &rWorld, Sampler &sampler, uint32_t flags, TransportMode mode) const {
+	Spectrum GridDensityMedium::Tr(const Ray &rWorld, Sampler &sampler) const {
 		ProfilePhase _(Prof::MediumTr);
 		++nTrCalls;
 

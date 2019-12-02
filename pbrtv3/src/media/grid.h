@@ -102,10 +102,9 @@ namespace pbrt {
 			if (!InsideExclusive(p, sampleBounds)) return 0;
 			return density[(p.z * ny + p.y) * nx + p.x];
 		}
-		Spectrum Sample(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, uint32_t flags = 0xFFFFFFFF, TransportMode mode = TransportMode::Importance) const;
+		Spectrum Sample(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const;
                 Spectrum SampleChannel(const Ray &rWorld, Sampler &sampler, MemoryArena &arena,    
-                                      MediumInteraction *mi, int channel, uint32_t flags = 0xFFFFFFFF, 
-                                      TransportMode mode = TransportMode::Importance) const;
+                                      MediumInteraction *mi, int channel) const;
 
                 Spectrum GetAbsorption(const Point3f &p) const;
                 Spectrum GetScattering(const Point3f &p) const;
@@ -123,7 +122,7 @@ namespace pbrt {
                 };
 
 
-		Spectrum Tr(const Ray &ray, Sampler &sampler, uint32_t flags = 0xFFFFFFFF, TransportMode mode = TransportMode::Importance) const;
+		Spectrum Tr(const Ray &ray, Sampler &sampler, uint32_t flags = 0xFFFFFFFF) const;
 
     Float GetG() const { return g; };
 

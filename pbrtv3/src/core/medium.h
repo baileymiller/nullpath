@@ -47,31 +47,6 @@
 
 namespace pbrt {
 
-// different non-exponential modes
-// these modes correspond to the following contributions
-// surface->surface, medium->surface, surface->medium, medium->medium
-enum TransmittanceMode
-{
-  NONEXP_SSC_MSC_SMC_MMC, // the original formulation
-  NONEXP_SST_MST_SMC_MMC, // non-reciprocal energy conserving
-  NONEXP_SST_MSC_SMT_MMC, // the counterpart of non-reciprocal to make it energy conserving - we dont generally use it as such
-  NONEXP_SST_MSC_SMC_MMC, // Reciprocal collision
-  NONEXP_SST_MST_SMT_MMC, // Reciprocal tracklength
-  NONEXP_SST_MST_SMT_MMT, // Reciprocal exclusive
-  MODE_UNKNOWN      // used to indicate an unknown flag
-};
-
-enum TransmittanceFunctionType
-{
-  TRANSMITTANCE_EXPONENTIAL,
-  TRANSMITTANCE_DAVIS,
-  TRANSMITTANCE_DAVIS_2PARAM,
-  TRANSMITTANCE_QUADRATIC_RAMP,
-  TRANSMITTANCE_LINEAR_RAMP,
-  TRANSMITTANCE_ERLANG2,
-  TRANSMITTANCE_UNKNOWN
-};
-
 // Media Declarations
 class PhaseFunction {
   public:
@@ -102,20 +77,20 @@ class Medium {
 public:
   // Medium Interface
   virtual ~Medium() {}
-  virtual Spectrum Tr(const Ray &ray, Sampler &sampler, uint32_t flags, TransportMode mode = TransportMode::Radiance) const = 0;
-  virtual Spectrum Tr(const RayDifferential& ray, Sampler& sampler, uint32_t flags, TransportMode mode = TransportMode::Radiance) const
+  virtual Spectrum Tr(const Ray &ray, Sampler &sampler) const = 0;
+  virtual Spectrum Tr(const RayDifferential& ray, Sampler& sampler) const
   {
   std::cout << "Error: Tr() with RayDifferentials is not implemented by default." << std::endl;
   return Spectrum(1.0f);
   }
-  virtual Spectrum Sample(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, uint32_t flags = 0xFFFFFFFF, TransportMode mode = TransportMode::Radiance) const = 0;
+  virtual Spectrum Sample(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const = 0;
   
-  virtual Spectrum SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel, uint32_t flags = 0xFFFFFFFF, TransportMode mode = TransportMode::Radiance) const {
+  virtual Spectrum SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, int channel) const {
     std::cout << "ERROR: SampleChannel is not implemented by default." << std::endl;
     return Spectrum(1.0f);
   };
 
-  virtual Spectrum Sample(const RayDifferential& ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi, uint32_t flags = 0xFFFFFFFF, TransportMode mode = TransportMode::Radiance) const
+  virtual Spectrum Sample(const RayDifferential& ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const
   {
   std::cout << "ERROR: Sample with RayDifferential is not implemented by default." << std::endl;
   return Spectrum(1.0f);

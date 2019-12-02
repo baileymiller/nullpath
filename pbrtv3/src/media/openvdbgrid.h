@@ -1,9 +1,6 @@
 #ifndef __OPENVDBGRIDMEDIUM_H__
 #define __OPENVDBGRIDMEDIUM_H__
 
-// Let cmake define the following variable
-
-#include "mediacommon.h"
 #include "openvdb.h"
 #include <openvdb/tools/Interpolation.h>
 #include "texture.h"
@@ -45,18 +42,13 @@ namespace pbrt
     Float Temperature(const Point3f &p) const;
 
     Spectrum Sample(const Ray &ray, Sampler &sampler, 
-                 MemoryArena &arena, MediumInteraction *mi, 
-                 uint32_t flags = 0xFFFFFFFF, 
-                 TransportMode mode = TransportMode::Radiance) const;
+                 MemoryArena &arena,
+                 MediumInteraction *mi) const;
         
     Spectrum SampleChannel(const Ray &rWorld, Sampler &sampler,   
-                    MemoryArena &arena, MediumInteraction *mi, int channel,
-                    uint32_t flags = 0xFFFFFFFF, 
-                    TransportMode mode = TransportMode::Radiance) const;
+                    MemoryArena &arena, MediumInteraction *mi, int channel) const;
 
-    Spectrum Tr(const Ray& ray, Sampler& sampler, 
-              uint32_t flags, 
-              TransportMode mode = TransportMode::Radiance) const;
+    Spectrum Tr(const Ray& ray, Sampler& sampler) const;
 
     Spectrum GetAbsorption(const Point3f &p) const;
 
@@ -66,8 +58,7 @@ namespace pbrt
 
     Spectrum GetMajorant() const;
 
-    Spectrum InterpolateWithTemperature(Point3f p, 
-                                        Spectrum x, Spectrum y) const;
+    Spectrum InterpolateWithTemperature(Point3f p, Spectrum x, Spectrum y) const;
 
     Spectrum InterpolateWithPerlin(Point3f p, Spectrum x, Spectrum y) const;
 
