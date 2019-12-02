@@ -1,8 +1,12 @@
 #ifndef __OPENVDBGRIDMEDIUM_H__
 #define __OPENVDBGRIDMEDIUM_H__
 
-#include "openvdb.h"
+#include <openvdb/openvdb.h>
 #include <openvdb/tools/Interpolation.h>
+
+#include "medium.h"
+#include "transform.h"
+#include "stats.h"
 #include "texture.h"
 
 namespace pbrt
@@ -11,8 +15,7 @@ namespace pbrt
   typedef openvdb::FloatGrid MonoGrid;
   typedef openvdb::Vec3SGrid RGBGrid;
   typedef openvdb::Vec3DGrid RGBGridf;
-  typedef 
-    openvdb::tools::GridSampler<MonoGrid, openvdb::tools::BoxSampler> 
+  typedef openvdb::tools::GridSampler<MonoGrid, openvdb::tools::BoxSampler> 
     MonoGridSampler;
           
 
