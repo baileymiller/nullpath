@@ -1,0 +1,7 @@
+build/*
+docs/*
+Field3D/*
+install/*
+
+*.dblite
+*.pyc
