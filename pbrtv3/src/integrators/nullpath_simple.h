@@ -1,0 +1,50 @@
+#ifndef PBRT_INTEGRATORS_NULLPATH_SIMPLE_H
+#define PBRT_INTEGRATORS_NULLPATH_SIMPLE_H
+
+// integrators/nullpath.h*
+#include "pbrt.h"
+#include "integrator.h"
+#include "lightdistrib.h"
+#include <sstream>
+
+namespace pbrt {
+
+// NullPathSimpleIntegrator Declarations
+class NullPathSimpleIntegrator : public SamplerIntegrator {
+  public:
+    // NullPathSimpleIntegrator Public Methods
+    NullPathIntegrator(int maxDepth, 
+                      std::shared_ptr<const Camera> camera,
+                      std::shared_ptr<Sampler> sampler,
+                      const Bounds2i &pixelBounds,
+                      Spectrum p_channel,
+                      Float rrThreshold = 1,
+                      const std::string &lightSampleStrategy = "spatial")
+        : SamplerIntegrator(camera, sampler, pixelBounds),
+          maxDepth(maxDepth),
+          m_p_channel(p_channel),
+          rrThreshold(rrThreshold),
+          lightSampleStrategy(lightSampleStrategy),
+          { }
+
+    void Preprocess(const Scene &scene, Sampler &sampler);
+    Spectrum Li(const RayDifferential &ray, const Scene &scene,
+                Sampler &sampler, MemoryArena &arena, int depth) const;
+
+  private:
+    // NullPathIntegrator Private Data
+    const int maxDepth;
+    const Spectrum m_p_channel;
+    const Float rrThreshold;
+    const std::string lightSampleStrategy;
+    std::unique_ptr<LightDistribution> lightDistribution;
+};
+
+
+NullPathIntegrator *CreateNullPathIntegrator(
+    const ParamSet &params, std::shared_ptr<Sampler> sampler,
+    std::shared_ptr<const Camera> camera);
+
+}  // namespace pbrt
+
+#endif  // PBRT_INTEGRATORS_NULLPATH_SIMPLE_H

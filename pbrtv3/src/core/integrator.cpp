@@ -473,6 +473,20 @@ Spectrum SamplerIntegrator::SpecularTransmit(
     return L;
 }
 
+Spectrum
+NullPathIntegrator::CalculateMISWeight(std::vector<double> P_OVER_F, Spectrum L) {
+  if (L.IsBlack()) return Spectrum(0.0f);
+  Spectrum RGB(0.0f);
+  for (int i = 0; i < 3; i++) {
+    double sum = 0.0f;
+    for (int j = 0; j < 3; j++) {
+      sum += P_OVER_F[i * 3 + j] * (1.0f / Spectrum::nSamples); 
+    }
+    RGB[i] = sum == 0.0f ? 0.0f : L[i] / sum;
+  }
+  return RGB;
+};
+
 MediumInteraction SampleDistEquiangular(const Scene &scene, 
                             MemoryArena &arena,
 														Point3f lightPos,

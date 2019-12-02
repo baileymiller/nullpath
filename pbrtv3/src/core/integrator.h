@@ -78,6 +78,14 @@ std::unique_ptr<Distribution1D> ComputeLightPowerDistribution(
 
 // Common functionality//
 
+Spectrum CalculateMISWeight(std::vector<double> P_OVER_F, 
+                            Spectrum L = Spectrum(1.0f));
+
+Spectrum CalculateTwoStrategyMISWeight(std::vector<double> P_OVER_F_1, 
+					   std::vector<double> P_OVER_F_2,
+					   Spectrum L = Spectrum(1.0f),
+					   bool isStrat1 = false);
+
 inline Float SQR(Float x) { return x * x; };
 
 MediumInteraction SampleDistEquiangular(const Scene &scene, 
