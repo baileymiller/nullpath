@@ -13,35 +13,31 @@ namespace pbrt {
 class NullPathSimpleIntegrator : public SamplerIntegrator {
   public:
     // NullPathSimpleIntegrator Public Methods
-    NullPathIntegrator(int maxDepth, 
+    NullPathSimpleIntegrator(int maxDepth, 
                       std::shared_ptr<const Camera> camera,
                       std::shared_ptr<Sampler> sampler,
                       const Bounds2i &pixelBounds,
-                      Spectrum p_channel,
                       Float rrThreshold = 1,
                       const std::string &lightSampleStrategy = "spatial")
         : SamplerIntegrator(camera, sampler, pixelBounds),
           maxDepth(maxDepth),
-          m_p_channel(p_channel),
           rrThreshold(rrThreshold),
-          lightSampleStrategy(lightSampleStrategy),
-          { }
+          lightSampleStrategy(lightSampleStrategy) {}
 
     void Preprocess(const Scene &scene, Sampler &sampler);
     Spectrum Li(const RayDifferential &ray, const Scene &scene,
                 Sampler &sampler, MemoryArena &arena, int depth) const;
 
   private:
-    // NullPathIntegrator Private Data
+    // NullPathSimpleIntegrator Private Data
     const int maxDepth;
-    const Spectrum m_p_channel;
     const Float rrThreshold;
     const std::string lightSampleStrategy;
     std::unique_ptr<LightDistribution> lightDistribution;
 };
 
 
-NullPathIntegrator *CreateNullPathIntegrator(
+NullPathSimpleIntegrator *CreateNullPathSimpleIntegrator(
     const ParamSet &params, std::shared_ptr<Sampler> sampler,
     std::shared_ptr<const Camera> camera);
 

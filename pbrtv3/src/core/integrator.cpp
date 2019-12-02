@@ -473,8 +473,7 @@ Spectrum SamplerIntegrator::SpecularTransmit(
     return L;
 }
 
-Spectrum
-NullPathIntegrator::CalculateMISWeight(std::vector<double> P_OVER_F, Spectrum L) {
+Spectrum CalculateMISWeight(std::vector<double> P_OVER_F, Spectrum L) {
   if (L.IsBlack()) return Spectrum(0.0f);
   Spectrum RGB(0.0f);
   for (int i = 0; i < 3; i++) {
