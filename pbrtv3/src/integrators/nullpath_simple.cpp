@@ -147,9 +147,6 @@ NullPathSimpleIntegrator *CreateNullPathIntegrator(
     const ParamSet &params, std::shared_ptr<Sampler> sampler,
     std::shared_ptr<const Camera> camera) {
     int maxDepth = params.FindOneInt("maxdepth", 0);
-    bool enableShadows = params.FindOneBool("enable-shadows", true);
-	if (!enableShadows)
-		std::cout << "\tINFO: Shadows were disabled for the renderer.!!" << std::endl;
     int np;
     const int *pb = params.FindInt("pixelbounds", &np);
     Bounds2i pixelBounds = camera->film->GetSampleBounds();
