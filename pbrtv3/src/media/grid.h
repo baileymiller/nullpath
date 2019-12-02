@@ -122,7 +122,7 @@ namespace pbrt {
                 };
 
 
-		Spectrum Tr(const Ray &ray, Sampler &sampler, uint32_t flags = 0xFFFFFFFF) const;
+		Spectrum Tr(const Ray &ray, Sampler &sampler) const;
 
     Float GetG() const { return g; };
 

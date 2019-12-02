@@ -86,7 +86,7 @@ Spectrum HomogeneousMedium::Tr(const RayDifferential &ray, Sampler &sampler) con
 
 Spectrum HomogeneousMedium::Tr(const Ray& ray, Sampler& sampler) const
 {
-    return Tr(RayDifferential(ray), sampler, flags, mode);
+    return Tr(RayDifferential(ray), sampler);
 }
 
 Spectrum HomogeneousMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const {
@@ -131,7 +131,7 @@ Spectrum HomogeneousMedium::SampleChannel(const Ray &ray, Sampler &sampler, Memo
 
 Spectrum HomogeneousMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi) const
 {
-	return Sample(RayDifferential(ray), sampler, arena, mi, flags, mode);
+	return Sample(RayDifferential(ray), sampler, arena, mi);
 }
 
 Spectrum HomogeneousMedium::GetAbsorption(const Point3f &p) const {

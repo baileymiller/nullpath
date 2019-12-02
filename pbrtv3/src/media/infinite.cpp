@@ -58,7 +58,7 @@ Spectrum InfiniteMedium::Tr(const RayDifferential &ray, Sampler &sampler) const 
 
 Spectrum InfiniteMedium::Tr(const Ray& ray, Sampler& sampler) const
 {
-    return Tr(RayDifferential(ray), sampler, flags, mode);
+    return Tr(RayDifferential(ray), sampler);
 }
 
 Spectrum InfiniteMedium::Sample(const RayDifferential &ray, Sampler &sampler, MemoryArena &arena, MediumInteraction *mi) const {
@@ -97,7 +97,7 @@ Spectrum InfiniteMedium::SampleChannel(const Ray &ray, Sampler &sampler, MemoryA
 
 Spectrum InfiniteMedium::Sample(const Ray& ray, Sampler& sampler, MemoryArena& arena, MediumInteraction* mi) const
 {
-	return Sample(RayDifferential(ray), sampler, arena, mi, flags, mode);
+	return Sample(RayDifferential(ray), sampler, arena, mi);
 }
 
 Spectrum InfiniteMedium::GetAbsorption(const Point3f &p) const {
