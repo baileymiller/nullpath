@@ -1,0 +1,17 @@
+.*.pbrt
+*.png
+*.txt
+*.exr
+*.upb
+*.upa
+*.out
+*.log
+*.fls
+*.fdb_latexmk
+*.blg
+*.bbl
+*.aux
+build/*
+pbrtv3/build
+pbrtv3/python/save
+pbrtv3/scenes
