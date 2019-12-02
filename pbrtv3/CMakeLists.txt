@@ -162,7 +162,6 @@ INCLUDE_DIRECTORIES (
 
 # Although pbrt comes with a openexr version, the paths are messed update
 # hence we might needdylib)
-FIND_PACKAGE(Field3D REQUIRED)
 FIND_PACKAGE(OpenVDB REQUIRED)
 FIND_PACKAGE(Boost REQUIRED COMPONENTS regex thread system iostreams)
 FIND_PACKAGE(hdf5custom REQUIRED)
@@ -315,7 +314,6 @@ FILE ( GLOB PBRT_SOURCE
   src/shapes/*.cpp
   src/textures/*.cpp
   src/media/*.cpp
-  src/transmittance/*.cpp
   )
 
 INCLUDE_DIRECTORIES ( src )
@@ -374,7 +372,6 @@ target_compile_definitions(pbrt PRIVATE ENABLE_OPENVDB_SUPPORT)
 #)
 ##endif()
 
-option(ENABLE_FIELD3D_SUPPORT "Build with Field3d support" ON)
 target_compile_definitions(pbrt PRIVATE ENABLE_FIELD3D_SUPPORT)
 target_compile_definitions(pbrt PRIVATE FIELD3D_STATIC)
 target_compile_definitions(pbrt_exe PRIVATE FIELD3D_STATIC)
@@ -416,7 +413,6 @@ set (REQUIRED_LIBS
 )
 endif() # end of win32 conditional check
 message("Important Libs--->")
-message("\t-Field3D:" ${FIELD3D_LIBRARY})
 message("\t-OPENEXR:" ${OPENEXR_LIBS})
 message("\t-OpenVDB:" ${OPENVDB_LIBRARY})
 message("\t\t include dir:" ${OPENVDB_INCLUDE_DIR})

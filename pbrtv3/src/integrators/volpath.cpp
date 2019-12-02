@@ -75,7 +75,7 @@ Spectrum VolPathIntegrator::Li(const RayDifferential &r, const Scene &scene,
         bool foundIntersection = scene.Intersect(ray, &isect);
         // Sample the participating medium, if present
         MediumInteraction mi;
-        if (ray.medium) beta *= ray.medium->Sample(ray, sampler, arena, &mi, 0);
+        if (ray.medium) beta *= ray.medium->Sample(ray, sampler, arena, &mi);
         if (beta.IsBlack()) break;
 
         // Handle an interaction with a medium or a surface

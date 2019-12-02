@@ -161,7 +161,7 @@ Spectrum EstimateDirect(const Interaction &it, const Point2f &uScattering,
         if (!f.IsBlack()) {
             // Compute effect of visibility for light source sample
 			if (handleMedia) {
-                Li *= visibility.Tr(scene, sampler, flags);
+                Li *= visibility.Tr(scene, sampler);
                 VLOG(2) << "  after Tr, Li: " << Li;
             } else {
               if (!visibility.Unoccluded(scene)) {
@@ -224,7 +224,7 @@ Spectrum EstimateDirect(const Interaction &it, const Point2f &uScattering,
             Ray ray = it.SpawnRay(wi);
             Spectrum Tr(1.f);
             bool foundSurfaceInteraction =
-                handleMedia ? scene.IntersectTr(ray, sampler, &lightIsect, &Tr, flags)
+                handleMedia ? scene.IntersectTr(ray, sampler, &lightIsect, &Tr)
                             : scene.Intersect(ray, &lightIsect);
 			if (!enableShadows)
 				Tr = Spectrum(1.0f);	// revert any shadowing or transmittance computation

@@ -51,27 +51,18 @@ class InfiniteMedium : public Medium {
                       const Spectrum &sigma_n,
                       Float g);
   
-  Spectrum Tr(const Ray &ray, Sampler &sampler, uint32_t flags = 0xFFFFFFFF, 
-              TransportMode mode = TransportMode::Radiance) const;
+  Spectrum Tr(const Ray &ray, Sampler &sampler) const;
 
-  Spectrum Tr(const RayDifferential& ray, Sampler& sampler, 
-              uint32_t flags = 0xFFFFFFFF, 
-              TransportMode mode = TransportMode::Radiance) const;
+  Spectrum Tr(const RayDifferential& ray, Sampler& sampler) const;
 	
   Spectrum Sample(const Ray &ray, Sampler &sampler, 
-                  MemoryArena &arena, MediumInteraction *mi, 
-                  uint32_t flags = 0xFFFFFFFF, 
-                  TransportMode mode = TransportMode::Radiance) const;
+                  MemoryArena &arena, MediumInteraction *mi) const;
   	
   Spectrum SampleChannel(const Ray &ray, Sampler &sampler, MemoryArena &arena, 
-                         MediumInteraction *mi, 
-                         int channel, uint32_t flags = 0xFFFFFFFF, 
-                         TransportMode mode = TransportMode::Radiance) const;
+                         MediumInteraction *mi, int channel) const;
 	
   Spectrum Sample(const RayDifferential &ray, Sampler &sampler, 
-                  MemoryArena &arena, MediumInteraction *mi, 
-                  uint32_t flags = 0xFFFFFFFF, 
-                  TransportMode mode = TransportMode::Radiance) const;
+                  MemoryArena &arena, MediumInteraction *mi) const;
 
   Spectrum GetAbsorption(const Point3f &p) const;
   Spectrum GetScattering(const Point3f &p) const;
