@@ -151,9 +151,6 @@ int main(int argc, char *argv[]) {
             "The source code to pbrt (but *not* the book contents) is covered "
             "by the BSD License.\n");
         printf("See the file LICENSE.txt for the conditions of the license.\n");
-#ifdef ENABLE_FIELD3D_SUPPORT
-        printf("Built with Field3d support..\n");
-#endif
 		if(options.imageFile.length() != 0)
 			printf("Rendering file : %s\n", options.imageFile.c_str());
         fflush(stdout);
