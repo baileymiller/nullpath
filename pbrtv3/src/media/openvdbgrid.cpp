@@ -2,8 +2,9 @@
 #include "medium.h"
 #include "interaction.h"
 #include "sampler.h"
-#include <openvdb/tools/Interpolation.h>
 
+#include <openvdb/openvdb.h>
+#include <openvdb/tools/Interpolation.h>
 namespace pbrt
 {
 
