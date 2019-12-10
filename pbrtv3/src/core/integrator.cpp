@@ -473,16 +473,41 @@ Spectrum SamplerIntegrator::SpecularTransmit(
     return L;
 }
 
-Spectrum CalculateMISWeight(std::vector<double> P_OVER_F, Spectrum L) {
+Spectrum CalculateMISWeight(
+  std::vector<double> P_OVER_F,
+  Spectrum L
+) {
   if (L.IsBlack()) return Spectrum(0.0f);
   Spectrum RGB(0.0f);
   for (int i = 0; i < 3; i++) {
     double sum = 0.0f;
     for (int j = 0; j < 3; j++) {
-      sum += P_OVER_F[i * 3 + j] * (1.0f / Spectrum::nSamples); 
+      sum += P_OVER_F[i * 3 + j];
     }
-    RGB[i] = sum == 0.0f ? 0.0f : L[i] / sum;
+    RGB[i] = sum == 0.0f ? 0.0f : 3.0f * L[i] / sum;
   }
+  return RGB;
+};
+
+Spectrum CalculateTwoStrategyMISWeight(
+  std::vector<double> P_OVER_F_1,
+  std::vector<double> P_OVER_F_2,
+  Spectrum L,
+  bool isStrat1
+) {
+  if (L.IsBlack()) return Spectrum(0.0f);
+  if (isStrat1 && AllZerosVec(P_OVER_F_1)) return Spectrum(0.0f);
+  if (!isStrat1 && AllZerosVec(P_OVER_F_2)) return Spectrum(0.0f);
+
+  Spectrum RGB(0.0f);
+  for (int i = 0; i < 3; i++) {
+    double sum = 0.0f;
+    for (int j = 0; j < 3; j++) { 
+      sum += P_OVER_F_1[i * 3 + j] + P_OVER_F_2[i * 3 + j];
+    }
+    RGB[i] = sum == 0.0f ? 0.0f : 3.0f * L[i] / sum;
+  }
+
   return RGB;
 };
 
