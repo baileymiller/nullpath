@@ -60,6 +60,7 @@
 #include "integrators/sppm.h"
 #include "integrators/volpath.h"
 #include "integrators/nullpath.h"
+#include "integrators/spectralmis.h"
 #include "integrators/spectral.h"
 #include "integrators/delta.h"
 #include "integrators/volpathmod.h"
@@ -1547,6 +1548,8 @@ Integrator *RenderOptions::MakeIntegrator() const {
 	integrator = CreateVolPathModIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "nullpath")
         integrator = CreateNullPathIntegrator(IntegratorParams, sampler, camera);
+    else if (IntegratorName == "spectralmis")
+        integrator = CreateSpectralMISIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "spectral")
         integrator = CreateSpectralIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "delta")
