@@ -61,6 +61,7 @@
 #include "integrators/volpath.h"
 #include "integrators/nullpath.h"
 #include "integrators/spectralmis.h"
+#include "integrators/unidirectionalspectralmis.h"
 #include "integrators/spectral.h"
 #include "integrators/delta.h"
 #include "integrators/volpathmod.h"
@@ -1550,6 +1551,8 @@ Integrator *RenderOptions::MakeIntegrator() const {
         integrator = CreateNullPathIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "spectralmis")
         integrator = CreateSpectralMISIntegrator(IntegratorParams, sampler, camera);
+    else if (IntegratorName == "unidirectionalspectralmis")
+        integrator = CreateUnidirectionalSpectralMISIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "spectral")
         integrator = CreateSpectralIntegrator(IntegratorParams, sampler, camera);
     else if (IntegratorName == "delta")
@@ -1574,7 +1577,9 @@ Integrator *RenderOptions::MakeIntegrator() const {
         || IntegratorName == "spectral"
         || IntegratorName == "nullpath"
         || IntegratorName == "delta"
-        || IntegratorName == "spectralmis";
+        || IntegratorName == "spectralmis"
+        || IntegratorName == "unidirectionalspectralmis";
+
 
     if (renderOptions->haveScatteringMedia && !supportsScatteringMedia) {
         Warning(
