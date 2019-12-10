@@ -1567,12 +1567,21 @@ Integrator *RenderOptions::MakeIntegrator() const {
         return nullptr;
     }
 
-    if (renderOptions->haveScatteringMedia && IntegratorName != "volpath" &&
-        IntegratorName != "bdpt" && IntegratorName != "mlt" && IntegratorName != "volpathmod" && IntegratorName != "spectral" && IntegratorName != "nullpath" && IntegratorName != "delta") {
+    bool supportsScatteringMedia = IntegratorName == "volpath"
+        || IntegratorName == "bdpt"
+        || IntegratorName == "mlt"
+        || IntegratorName == "volpathmod"
+        || IntegratorName == "spectral"
+        || IntegratorName == "nullpath"
+        || IntegratorName == "delta"
+        || IntegratorName == "spectralmis";
+
+    if (renderOptions->haveScatteringMedia && !supportsScatteringMedia) {
         Warning(
             "Scene has scattering media but \"%s\" integrator doesn't support "
             "volume scattering. Consider using \"volpath\", \"bdpt\", or "
-            "\"mlt\".", IntegratorName.c_str());
+            "\"mlt\".", IntegratorName.c_str()
+        );
     }
 
     IntegratorParams.ReportUnused();
@@ -1580,7 +1589,8 @@ Integrator *RenderOptions::MakeIntegrator() const {
     if (lights.empty())
         Warning(
             "No light sources defined in scene; "
-            "rendering a black image.");
+            "rendering a black image."
+        );
     return integrator;
 }
 
